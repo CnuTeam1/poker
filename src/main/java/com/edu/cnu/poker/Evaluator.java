@@ -46,7 +46,6 @@ public class Evaluator {
         for (Integer key : countMap.keySet()) {
 
             if(countMap.get(key) == 2){
-                System.out.println(countMap);
                 onePair = true;
                 for(Integer secondKey : countMap.keySet()){
                     if(countMap.get(secondKey) == 2 && key != secondKey){
