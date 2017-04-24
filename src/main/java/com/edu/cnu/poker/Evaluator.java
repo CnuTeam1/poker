@@ -13,15 +13,11 @@ public class Evaluator {
         Map<Suit, Integer> tempMap = new HashMap<Suit, Integer>();
         Map<Integer, Integer> straightMap = new HashMap<Integer, Integer>();
 
-        for (Card card : cardList) {
-            if (tempMap.containsKey(card.getSuit())) {
-                Integer count = tempMap.get(card.getSuit());
-                count = new Integer(count.intValue() + 1);
-                tempMap.put(card.getSuit(), count);
-            } else {
-                tempMap.put(card.getSuit(), new Integer(1));
-            }
-        }
+
+        return "NOTHING";
+    }
+
+    private String isStraight(List<Card> cardList, Map<Integer, Integer> straightMap) {
         //Straight
         int[] straight;
         straight = new int[cardList.size()];  //추가하자면, 7개인 경우의 수도 무슨 포커를 하냐에 따라 지급한 카드의 수를 입력해야한다
@@ -63,15 +59,8 @@ public class Evaluator {
                 return "STRAIGHT";
             }
         }
-
-        for (Suit key : tempMap.keySet()) {
-            if (tempMap.get(key) == 5) {
-                return "FLUSH";
-            }
-        }
         return "NOTHING";
     }
-
 
     private String isFlush(List<Card> cardList, Map<Suit, Integer> tempMap) {
         for (Card card : cardList) {
@@ -83,6 +72,8 @@ public class Evaluator {
                 tempMap.put(card.getSuit(), new Integer(1));
             }
         }
+
+
         for (Suit key : tempMap.keySet()) {
             if (tempMap.get(key) == 5) {
                 return "FLUSH";
@@ -90,6 +81,10 @@ public class Evaluator {
         }
         return "NOTHING";
     }
+
+
+
+
 
     public void quickSort(int numbers[], int array_size) {
         q_sort(numbers, 0, array_size - 1);
@@ -99,19 +94,13 @@ public class Evaluator {
         int pivot, l_hold, r_hold;
         l_hold = left;
         r_hold = right;
-        pivot = numbers[left]; // 0번째 원소를 피봇으로 선택
+        pivot = numbers[left];
         while (left < right) {
-            // 값이 선택한 피봇과 같거나 크다면, 이동할 필요가 없다
             while ((numbers[right] >= pivot) && (left < right))
                 right--;
-
-            // 그렇지 않고 값이 피봇보다 작다면,
-            // 피봇의 위치에 현재 값을 넣는다.
             if (left != right) {
                 numbers[left] = numbers[right];
             }
-            // 왼쪽부터 현재 위치까지 값을 읽어들이면서
-            // 피봇보다 큰 값이 있다면, 값을 이동한다.
             while ((numbers[left] <= pivot) && (left < right))
                 left++;
             if (left != right) {
@@ -119,14 +108,11 @@ public class Evaluator {
                 right--;
             }
         }
-        // 모든 스캔이 끝났다면, 피봇값을 현재 위치에 입력한다.
-        // 이제 피봇을 기준으로 왼쪽에는 피봇보다 작거나 같은 값만 남았다.
         numbers[left] = pivot;
         pivot = left;
         left = l_hold;
         right = r_hold;
 
-        // 재귀호출을 수행한다.
         if (left < pivot)
             q_sort(numbers, left, pivot - 1);
         if (right > pivot)
