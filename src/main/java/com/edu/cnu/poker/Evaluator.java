@@ -55,11 +55,11 @@ public class Evaluator {
         if(onePair && triple){
             return "FULLHOUSE";
         }
-        else if(onePair){
-            return "ONEPAIR";
-        }
         else if(triple){
             return "TRIPLE";
+        }
+        else if(onePair){
+            return "ONEPAIR";
         }
         return "NOTHING";
     }
