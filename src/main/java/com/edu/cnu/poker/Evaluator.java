@@ -14,7 +14,10 @@ public class Evaluator {
         Map<Integer, Integer> countMap = new HashMap<Integer, Integer>();
 
         boolean onePair = false;
+        boolean twoPair = false;
         boolean triple = false;
+        boolean fourCard = false;
+        boolean fullHouse = false;
 
         for (Card card : cardList) {
             if (tempMap.containsKey(card.getSuit())) {
@@ -43,20 +46,32 @@ public class Evaluator {
         for (Integer key : countMap.keySet()) {
 
             if(countMap.get(key) == 2){
+                System.out.println(countMap);
                 onePair = true;
+                for(Integer secondKey : countMap.keySet()){
+                    if(countMap.get(secondKey) == 2 && key != secondKey){
+                        twoPair = false;
+                    }
+                }
             }
             else if (countMap.get(key) == 3) {
                 triple = true;
             }
             else if(countMap.get(key) == 4){
-                return "FOURCARD";
+                fourCard = true;
             }
         }
         if(onePair && triple){
             return "FULLHOUSE";
         }
+        else if(fourCard){
+            return "FOURCARD";
+        }
         else if(triple){
             return "TRIPLE";
+        }
+        else if(twoPair){
+            return "TWOPAIR";
         }
         else if(onePair){
             return "ONEPAIR";

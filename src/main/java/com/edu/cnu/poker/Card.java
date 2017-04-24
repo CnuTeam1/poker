@@ -18,7 +18,6 @@ public class Card implements Comparable<Card>{
             throw new NoSuchRankException();
         }
     }
-
     public int compareTo(Card o) {
         return this.getRank() - o.getRank();
     }
