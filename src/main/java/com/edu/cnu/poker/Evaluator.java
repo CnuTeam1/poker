@@ -21,6 +21,23 @@ public class Evaluator {
                 tempMap.put(card.getSuit(), new Integer(1));
             }
         }
+        //Straigth
+        String x = isStraight(cardList);
+        if (x != null)
+            return x;
+
+
+        //end
+        for (Suit key : tempMap.keySet()) {
+            if (tempMap.get(key) == 5) {
+                return "FLUSH";
+            }
+        }
+        return "NOTHING";
+
+    }
+
+    private String isStraight(List<Card> cardList) {
         //Straight
         int [] straight;
         straight = new int[cardList.size()];  //추가하자면, 7개인 경우의 수도 무슨 포커를 하냐에 따라 지급한 카드의 수를 입력해야한다
@@ -50,15 +67,7 @@ public class Evaluator {
         } else{
             return "NOTHING";
         }
-
-        //end
-        for (Suit key : tempMap.keySet()) {
-            if (tempMap.get(key) == 5) {
-                return "FLUSH";
-            }
-        }
-        return "NOTHING";
-
+        return null;
     }
 
     public void quickSort(int numbers[], int array_size)
