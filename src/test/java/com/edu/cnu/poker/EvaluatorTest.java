@@ -58,4 +58,20 @@ public class EvaluatorTest {
         String result = evaluator.evaluate(cardList);
         assertThat(result, is("STRAIGHT FLUSH"));
     }
+
+    @Test
+    public void 로얄이다() {
+        Evaluator evaluator = new Evaluator();
+        List<Card> cardList = Arrays.asList(
+                new Card(11,Suit.CLUBS),
+                new Card(12,Suit.CLUBS),
+                new Card(13,Suit.DIAMONDS),
+                new Card(1,Suit.DIAMONDS),
+                new Card(5,Suit.CLUBS),
+                new Card(7,Suit.HEARTS),
+                new Card(10,Suit.CLUBS)
+        );
+        String result = evaluator.evaluate(cardList);
+        assertThat(result, is("ROYAL"));
+    }
 }
