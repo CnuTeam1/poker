@@ -30,15 +30,29 @@ public class EvaluatorTest {
     public void 연속적인_5개카드면_스트레이트다(){
         Evaluator evaluator = new Evaluator();
         List<Card> cardList = Arrays.asList(
-                new Card(4,Suit.CLUBS),
-                new Card(1,Suit.DIAMONDS),
-                new Card(9,Suit.HEARTS),
-                new Card(10,Suit.HEARTS),
-                new Card(11,Suit.SPADES),
-                new Card(12,Suit.CLUBS),
-                new Card(1,Suit.DIAMONDS)
+                new Card(11,Suit.CLUBS),
+                new Card(3,Suit.DIAMONDS),
+                new Card(5,Suit.HEARTS),
+                new Card(1,Suit.HEARTS),
+                new Card(1,Suit.SPADES),
+                new Card(2,Suit.CLUBS),
+                new Card(7,Suit.DIAMONDS)
                 );
         String result = evaluator.evaluate(cardList);
-        assertThat(result, is("NOTHING"));
+        assertThat(result, is("STRAIGHT"));
+    }
+
+    @Test
+    public void 스트레이트이면서_플러시이면_스트레이트플러시이다(){
+        Evaluator evaluator = new Evaluator();
+        List<Card> cardList = Arrays.asList(
+                new Card(4,Suit.CLUBS),
+                new Card(5,Suit.CLUBS),
+                new Card(6,Suit.CLUBS),
+                new Card(7,Suit.CLUBS),
+                new Card(8,Suit.CLUBS)
+        );
+        String result = evaluator.evaluate(cardList);
+        assertThat(result, is("STRAIGHT FLUSH"));
     }
 }
