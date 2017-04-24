@@ -38,7 +38,20 @@ public class EvaluatorTest {
                 new Card(2,Suit.CLUBS)
         );
         String result = evaluator.evaluate(cardList);
-        assertThat(result, is("ONEFAIR"));
+        assertThat(result, is("ONEPAIR"));
     }
 
+    @Test
+    public void RANK가_동일한카드가_두쌍이면_투페어다(){
+        Evaluator evaluator = new Evaluator();
+        List<Card> cardList = Arrays.asList(
+                new Card(1,Suit.CLUBS),
+                new Card(1,Suit.DIAMONDS),
+                new Card(8,Suit.CLUBS),
+                new Card(13,Suit.CLUBS),
+                new Card(2,Suit.CLUBS)
+        );
+        String result = evaluator.evaluate(cardList);
+        assertThat(result, is("TWOPAIR"));
+    }
 }
