@@ -39,6 +39,11 @@ public class Evaluator {
                 return "FLUSH";
             }
         }
+        for (Integer key : countMap.keySet()) {
+            if (countMap.get(key) == 3) {
+                return "TRIPLE";
+            }
+        }
         return "NOTHING";
     }
 }
