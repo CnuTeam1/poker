@@ -26,4 +26,19 @@ public class EvaluatorTest {
         String result = evaluator.evaluate(cardList);
         assertThat(result, is("FLUSH"));
     }
+    @Test
+    public void 연속적인_5개카드면_스트레이트다(){
+        Evaluator evaluator = new Evaluator();
+        List<Card> cardList = Arrays.asList(
+                new Card(4,Suit.CLUBS),
+                new Card(1,Suit.DIAMONDS),
+                new Card(9,Suit.HEARTS),
+                new Card(10,Suit.HEARTS),
+                new Card(11,Suit.SPADES),
+                new Card(12,Suit.CLUBS),
+                new Card(1,Suit.DIAMONDS)
+                );
+        String result = evaluator.evaluate(cardList);
+        assertThat(result, is("NOTHING"));
+    }
 }
