@@ -2,6 +2,7 @@ package com.edu.cnu.poker;
 
 import org.junit.Test;
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class EvaluatorTest {
                 new Card(3,Suit.DIAMONDS),
                 new Card(5,Suit.HEARTS),
                 new Card(1,Suit.HEARTS),
-                new Card(1,Suit.SPADES),
+                new Card(4,Suit.SPADES),
                 new Card(2,Suit.CLUBS),
                 new Card(7,Suit.DIAMONDS)
                 );
@@ -48,11 +49,44 @@ public class EvaluatorTest {
         List<Card> cardList = Arrays.asList(
                 new Card(4,Suit.CLUBS),
                 new Card(5,Suit.CLUBS),
-                new Card(6,Suit.CLUBS),
-                new Card(7,Suit.CLUBS),
-                new Card(8,Suit.CLUBS)
+                new Card(5,Suit.DIAMONDS),
+                new Card(7,Suit.DIAMONDS),
+                new Card(12,Suit.CLUBS),
+                new Card(9,Suit.HEARTS),
+                new Card(10,Suit.CLUBS)
         );
         String result = evaluator.evaluate(cardList);
         assertThat(result, is("STRAIGHT FLUSH"));
+    }
+
+    @Test
+    public void 로얄이다() {
+        Evaluator evaluator = new Evaluator();
+        List<Card> cardList = Arrays.asList(
+                new Card(11,Suit.CLUBS),
+                new Card(12,Suit.CLUBS),
+                new Card(13,Suit.DIAMONDS),
+                new Card(1,Suit.DIAMONDS),
+                new Card(5,Suit.CLUBS),
+                new Card(7,Suit.HEARTS),
+                new Card(10,Suit.CLUBS)
+        );
+        String result = evaluator.evaluate(cardList);
+        assertThat(result, is("ROYAL"));
+    }
+
+    public void 로얄스트레이트이다(){
+        Evaluator evaluator = new Evaluator();
+        List<Card> cardList = Arrays.asList(
+                new Card(11,Suit.CLUBS),
+                new Card(12,Suit.CLUBS),
+                new Card(13,Suit.DIAMONDS),
+                new Card(9,Suit.DIAMONDS),
+                new Card(5,Suit.CLUBS),
+                new Card(7,Suit.HEARTS),
+                new Card(10,Suit.CLUBS)
+        );
+        String result = evaluator.evaluate(cardList);
+        assertThat(result, is("ROYAL STRAIGHT"));
     }
 }

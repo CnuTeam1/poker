@@ -10,14 +10,39 @@ import java.util.Map;
 public class Evaluator {
 
     public String evaluate(List<Card> cardList) {
-        Map<Suit, Integer> tempMap = new HashMap<Suit, Integer>();
-        Map<Integer, Integer> straightMap = new HashMap<Integer, Integer>();
+        Map<Suit, Integer> suitRelatedMap = new HashMap<Suit, Integer>();
+        Map<Integer, Integer> rankRelatedMap = new HashMap<Integer, Integer>();
 
+
+        if(isStraight(cardList, rankRelatedMap)&&isFlush(cardList,suitRelatedMap)){
+            return  "STRAIGHT FLUSH";
+        }
+        else if(isFlush(cardList, suitRelatedMap)){
+            return "FLUSH";
+        }
+        else if(isStraight(cardList,rankRelatedMap)){
+            return  "STRAIGHT";
+        }
+        else if(isRoyal(cardList, rankRelatedMap)){
+                return "ROYAL";
+        }
 
         return "NOTHING";
     }
 
-    private String isStraight(List<Card> cardList, Map<Integer, Integer> straightMap) {
+    private boolean isRoyal(List<Card> cardList, Map<Integer, Integer> rankRelatedMap) {
+        for (Card card : cardList){
+            if(rankRelatedMap.containsKey(11)&&rankRelatedMap.containsKey(12)&&rankRelatedMap.containsKey(13)){
+                return true;
+            }
+            else{
+                rankRelatedMap.put(card.getRank(),new Integer(1));
+            }
+        }
+        return false;
+    }
+
+    private boolean isStraight(List<Card> cardList, Map<Integer, Integer> straightMap) {
         //Straight
         int[] straight;
         straight = new int[cardList.size()];  //추가하자면, 7개인 경우의 수도 무슨 포커를 하냐에 따라 지급한 카드의 수를 입력해야한다
@@ -56,13 +81,14 @@ public class Evaluator {
 
         for (Integer integer : straightMap.keySet()) {
             if (straightMap.get(integer) == 4) {
-                return "STRAIGHT";
+                //숫자중에 value가 4인것이 있으면 STRAIGHT
+                return true;
             }
         }
-        return "NOTHING";
+        return false;
     }
 
-    private String isFlush(List<Card> cardList, Map<Suit, Integer> tempMap) {
+    private boolean isFlush(List<Card> cardList, Map<Suit, Integer> tempMap) {
         for (Card card : cardList) {
             if (tempMap.containsKey(card.getSuit())) {
                 Integer count = tempMap.get(card.getSuit());
@@ -75,11 +101,11 @@ public class Evaluator {
 
 
         for (Suit key : tempMap.keySet()) {
-            if (tempMap.get(key) == 5) {
-                return "FLUSH";
+            if (tempMap.get(key) >= 5) {
+                return true;
             }
         }
-        return "NOTHING";
+        return false;
     }
 
 
