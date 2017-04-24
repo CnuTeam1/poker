@@ -13,6 +13,9 @@ public class Evaluator {
         Map<Suit, Integer> tempMap = new HashMap<Suit, Integer>();
         Map<Integer, Integer> countMap = new HashMap<Integer, Integer>();
 
+        boolean onePair = false;
+        boolean triple = false;
+
         for (Card card : cardList) {
             if (tempMap.containsKey(card.getSuit())) {
                 Integer count = tempMap.get(card.getSuit());
@@ -22,7 +25,6 @@ public class Evaluator {
                 tempMap.put(card.getSuit(), new Integer(1));
             }
         }
-
         for (Card card : cardList) {
             if (countMap.containsKey(card.getRank())) {
                 Integer count = countMap.get(card.getRank());
@@ -39,12 +41,25 @@ public class Evaluator {
             }
         }
         for (Integer key : countMap.keySet()) {
-            if (countMap.get(key) == 3) {
-                return "TRIPLE";
+
+            if(countMap.get(key) == 2){
+                onePair = true;
+            }
+            else if (countMap.get(key) == 3) {
+                triple = true;
             }
             else if(countMap.get(key) == 4){
                 return "FOURCARD";
             }
+        }
+        if(onePair && triple){
+            return "FULLHOUSE";
+        }
+        else if(onePair){
+            return "ONEPAIR";
+        }
+        else if(triple){
+            return "TRIPLE";
         }
         return "NOTHING";
     }
