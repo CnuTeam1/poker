@@ -74,7 +74,7 @@ public class EvaluatorTest {
         String result = evaluator.evaluate(cardList);
         assertThat(result, is("ROYAL"));
     }
-
+    @Test
     public void 로얄스트레이트이다(){
         Evaluator evaluator = new Evaluator();
         List<Card> cardList = Arrays.asList(
@@ -82,7 +82,7 @@ public class EvaluatorTest {
                 new Card(12,Suit.CLUBS),
                 new Card(13,Suit.DIAMONDS),
                 new Card(9,Suit.DIAMONDS),
-                new Card(5,Suit.CLUBS),
+                new Card(5,Suit.HEARTS),
                 new Card(7,Suit.HEARTS),
                 new Card(10,Suit.CLUBS)
         );

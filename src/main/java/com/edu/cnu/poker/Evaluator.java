@@ -17,11 +17,15 @@ public class Evaluator {
         if(isStraight(cardList, rankRelatedMap)&&isFlush(cardList,suitRelatedMap)){
             return  "STRAIGHT FLUSH";
         }
-        else if(isFlush(cardList, suitRelatedMap)){
-            return "FLUSH";
+        else if(isStraight(cardList,rankRelatedMap) && isRoyal(cardList,rankRelatedMap)){
+            return "ROYAL STRAIGHT";
         }
+
         else if(isStraight(cardList,rankRelatedMap)){
             return  "STRAIGHT";
+        }
+        else if(isFlush(cardList, suitRelatedMap)){
+            return "FLUSH";
         }
         else if(isRoyal(cardList, rankRelatedMap)){
                 return "ROYAL";
