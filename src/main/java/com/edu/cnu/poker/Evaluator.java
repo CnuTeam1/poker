@@ -45,6 +45,12 @@ public class Evaluator {
             }
         }
 
+        //TwoFair
+        for (Integer key : tempMap2.keySet()) {
+            if (tempMap2.get(key) == 2 && tempMap2.get(key) == 2){
+                return "ONEPAIR";
+            }
+        }
 
         return "NOTHING";
     }
