@@ -1,6 +1,5 @@
 package com.edu.cnu.poker;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +41,9 @@ public class Evaluator {
         for (Integer key : countMap.keySet()) {
             if (countMap.get(key) == 3) {
                 return "TRIPLE";
+            }
+            else if(countMap.get(key) == 4){
+                return "FOURCARD";
             }
         }
         return "NOTHING";

@@ -39,4 +39,17 @@ public class EvaluatorTest {
         String result = evaluator.evaluate(cardList);
         assertThat(result, is("TRIPLE"));
     }
+    @Test
+    public void 같은숫자가_4개면_포카드다(){
+        Evaluator evaluator = new Evaluator();
+        List<Card> cardList = Arrays.asList(
+                new Card(1,Suit.CLUBS),
+                new Card(1,Suit.SPADES),
+                new Card(3,Suit.CLUBS),
+                new Card(1,Suit.DIAMONDS),
+                new Card(1,Suit.HEARTS)
+        );
+        String result = evaluator.evaluate(cardList);
+        assertThat(result, is("FOURCARD"));
+    }
 }
