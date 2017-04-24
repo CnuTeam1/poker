@@ -37,17 +37,22 @@ public class Evaluator {
                 return "FLUSH";
             }
         }
-
+/*
         //OneFair
         for (Integer key : tempMap2.keySet()) {
             if (tempMap2.get(key) == 2){
                 return "ONEPAIR";
             }
         }
-
+*/
         //TwoFair
         for (Integer key : tempMap2.keySet()) {
-            if (tempMap2.get(key) == 2 && tempMap2.get(key) == 2){
+            if( tempMap2.get(key) == 2){
+                for(Integer key2 : tempMap2.keySet()){
+                    if(tempMap2.get(key2) == 2 && key != key2){
+                        return "TWOPAIR";
+                    }
+                }
                 return "ONEPAIR";
             }
         }

@@ -49,7 +49,7 @@ public class EvaluatorTest {
                 new Card(1,Suit.DIAMONDS),
                 new Card(8,Suit.CLUBS),
                 new Card(8,Suit.HEARTS),
-        new Card(2,Suit.CLUBS)
+                new Card(2,Suit.CLUBS)
         );
         String result = evaluator.evaluate(cardList);
         assertThat(result, is("TWOPAIR"));
