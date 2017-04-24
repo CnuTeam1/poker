@@ -57,6 +57,15 @@ public class Evaluator {
             }
         }
 
+        //NoFair
+        for(Suit key : tempMap.keySet()){
+            for (Integer key2 : tempMap2.keySet()){
+                if((tempMap.get(key) == 2 && tempMap2.get(key2) == 1) || (tempMap.get(key) == 3 && tempMap2.get(key2) == 1) || (tempMap.get(key) == 4 && tempMap2.get(key2) == 1)){
+                    return "NOPAIR";
+                }
+            }
+        }
+
         return "NOTHING";
     }
 }
