@@ -23,9 +23,24 @@ public class Evaluator {
         else if(isStraight(cardList,rankRelatedMap)){
             return  "STRAIGHT";
         }
+        else if(isRoyal(cardList,rankRelatedMap)){
+            return "ROYAL";
+        }
 
 
         return "NOTHING";
+    }
+
+    private boolean isRoyal(List<Card> cardList, Map<Integer, Integer> rankRelatedMap) {
+        for (Card card : cardList){
+            if(rankRelatedMap.containsKey(11)&&rankRelatedMap.containsKey(12)&&rankRelatedMap.containsKey(13)){
+                return true;
+            }
+            else{
+                rankRelatedMap.put(card.getRank(),new Integer(1));
+            }
+        }
+        return false;
     }
 
     private boolean isStraight(List<Card> cardList, Map<Integer, Integer> straightMap) {

@@ -49,10 +49,10 @@ public class EvaluatorTest {
         List<Card> cardList = Arrays.asList(
                 new Card(4,Suit.CLUBS),
                 new Card(5,Suit.CLUBS),
-                new Card(5,Suit.DIAMONDS),
-                new Card(7,Suit.DIAMONDS),
-                new Card(12,Suit.CLUBS),
-                new Card(9,Suit.HEARTS),
+                new Card(6,Suit.CLUBS),
+                new Card(7,Suit.CLUBS),
+                new Card(12,Suit.HEARTS),
+                new Card(8,Suit.DIAMONDS),
                 new Card(10,Suit.CLUBS)
         );
         String result = evaluator.evaluate(cardList);
