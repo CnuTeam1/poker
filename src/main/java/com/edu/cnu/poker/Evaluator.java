@@ -27,14 +27,16 @@ public class Evaluator {
             }
         }
 
-        //NoFair
-        for (Suit key : suitRelatedMap.keySet()) {
-            for (Integer key2 : rankRelatedMap.keySet()) {
-                if ((rankRelatedMap.get(key) == 2 && rankRelatedMap.get(key2) == 1) || (rankRelatedMap.get(key) == 3 && rankRelatedMap.get(key2) == 1) || (rankRelatedMap.get(key) == 4 && rankRelatedMap.get(key2) == 1)) {
-                    return "NOPAIR";
-                }
+        for (Card card : cardList) {
+            if (suitRelatedMap.containsKey(card.getSuit())) {
+                Integer count = suitRelatedMap.get(card.getSuit());
+                count = new Integer(count.intValue() + 1);
+                suitRelatedMap.put(card.getSuit(), count);
+            } else {
+                suitRelatedMap.put(card.getSuit(), new Integer(1));
             }
         }
+
 
         for (Integer key : rankRelatedMap.keySet()) {
 
@@ -61,6 +63,14 @@ public class Evaluator {
             return "TWOPAIR";
         } else if (onePair) {
             return "ONEPAIR";
+        }
+        //NoFair
+        for (Suit key : suitRelatedMap.keySet()) {
+            for (Integer key2 : rankRelatedMap.keySet()) {
+                if((suitRelatedMap.get(key) == 2 && rankRelatedMap.get(key2) == 1) || (suitRelatedMap.get(key) == 3 && rankRelatedMap.get(key2) == 1) || (suitRelatedMap.get(key) == 4 && rankRelatedMap.get(key2) == 1)){
+                    return "NOPAIR";
+                }
+            }
         }
 
 
