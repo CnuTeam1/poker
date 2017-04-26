@@ -26,15 +26,17 @@ public class EvaluatorTest {
         String result = evaluator.evaluate(cardList);
         assertThat(result, is("FLUSH"));
     }
+
     @Test
-    public void 같은숫자가_2개면_원페어다(){
+    public void 같은숫자가_2개면_원페어다() {
         Evaluator evaluator = new Evaluator();
         List<Card> cardList = Arrays.asList(
-                new Card(9,Suit.CLUBS),
-                new Card(5,Suit.SPADES),
-                new Card(1,Suit.CLUBS),
-                new Card(7,Suit.DIAMONDS),
-                new Card(5,Suit.HEARTS)
+                new Card(9, Suit.CLUBS),
+                new Card(5, Suit.SPADES),
+                new Card(1, Suit.CLUBS),
+                new Card(7, Suit.DIAMONDS),
+                new Card(5, Suit.HEARTS)
+
         );
         String result = evaluator.evaluate(cardList);
         assertThat(result, is("ONEPAIR"));
@@ -48,9 +50,24 @@ public class EvaluatorTest {
                 new Card(9,Suit.CLUBS),
                 new Card(9,Suit.DIAMONDS),
                 new Card(5,Suit.HEARTS)
+
         );
         String result = evaluator.evaluate(cardList);
         assertThat(result, is("TWOPAIR"));
+    }
+
+    @Test
+    public void 아무런_조건에_성립하지_않을경우_노페어다() {
+        Evaluator evaluator = new Evaluator();
+        List<Card> cardList = Arrays.asList(
+                new Card(1, Suit.CLUBS),
+                new Card(4, Suit.DIAMONDS),
+                new Card(5, Suit.SPADES),
+                new Card(7, Suit.HEARTS),
+                new Card(10, Suit.CLUBS)
+        );
+        String result = evaluator.evaluate(cardList);
+        assertThat(result, is("NOPAIR"));
     }
     @Test
     public void 같은숫자가_3개면_트리플이다(){

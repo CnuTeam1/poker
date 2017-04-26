@@ -43,13 +43,23 @@ public class Evaluator {
                 return "FLUSH";
             }
         }
+
+        //NoFair
+        for(Suit key : tempMap.keySet()){
+            for (Integer key2 : countMap.keySet()){
+                if((tempMap.get(key) == 2 && countMap.get(key2) == 1) || (tempMap.get(key) == 3 && countMap.get(key2) == 1) || (tempMap.get(key) == 4 && countMap.get(key2) == 1)){
+                    return "NOPAIR";
+                }
+            }
+        }
+
         for (Integer key : countMap.keySet()) {
 
             if(countMap.get(key) == 2){
                 onePair = true;
                 for(Integer secondKey : countMap.keySet()){
                     if(countMap.get(secondKey) == 2 && key != secondKey){
-                        twoPair = false;
+                        twoPair = true;
                     }
                 }
             }
