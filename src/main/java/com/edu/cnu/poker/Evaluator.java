@@ -9,8 +9,15 @@ import java.util.Map;
  */
 public class Evaluator {
     public String evaluate(List<Card> cardList) {
+
         Map<Suit, Integer> tempMap = new HashMap<Suit, Integer>();
-        Map<Integer, Integer> tempMap2 = new HashMap<Integer, Integer>();
+        Map<Integer, Integer> countMap = new HashMap<Integer, Integer>();
+
+        boolean onePair = false;
+        boolean twoPair = false;
+        boolean triple = false;
+        boolean fourCard = false;
+        boolean fullHouse = false;
 
         for (Card card : cardList) {
             if (tempMap.containsKey(card.getSuit())) {
@@ -21,14 +28,13 @@ public class Evaluator {
                 tempMap.put(card.getSuit(), new Integer(1));
             }
         }
-
         for (Card card : cardList) {
-            if (tempMap2.containsKey(card.getRank())) {
-                Integer count = tempMap2.get(card.getRank());
+            if (countMap.containsKey(card.getRank())) {
+                Integer count = countMap.get(card.getRank());
                 count = new Integer(count.intValue() + 1);
-                tempMap2.put(card.getRank(), count);
+                countMap.put(card.getRank(), count);
             } else {
-                tempMap2.put(card.getRank(), new Integer(1));
+                countMap.put(card.getRank(), new Integer(1));
             }
         }
 
@@ -37,35 +43,48 @@ public class Evaluator {
                 return "FLUSH";
             }
         }
-/*
-        //OneFair
-        for (Integer key : tempMap2.keySet()) {
-            if (tempMap2.get(key) == 2){
-                return "ONEPAIR";
-            }
-        }
-*/
-        //TwoFair
-        for (Integer key : tempMap2.keySet()) {
-            if( tempMap2.get(key) == 2){
-                for(Integer key2 : tempMap2.keySet()){
-                    if(tempMap2.get(key2) == 2 && key != key2){
-                        return "TWOPAIR";
-                    }
-                }
-                return "ONEPAIR";
-            }
-        }
 
         //NoFair
         for(Suit key : tempMap.keySet()){
-            for (Integer key2 : tempMap2.keySet()){
-                if((tempMap.get(key) == 2 && tempMap2.get(key2) == 1) || (tempMap.get(key) == 3 && tempMap2.get(key2) == 1) || (tempMap.get(key) == 4 && tempMap2.get(key2) == 1)){
+            for (Integer key2 : countMap.keySet()){
+                if((tempMap.get(key) == 2 && countMap.get(key2) == 1) || (tempMap.get(key) == 3 && countMap.get(key2) == 1) || (tempMap.get(key) == 4 && countMap.get(key2) == 1)){
                     return "NOPAIR";
                 }
             }
         }
 
+        for (Integer key : countMap.keySet()) {
+
+            if(countMap.get(key) == 2){
+                onePair = true;
+                for(Integer secondKey : countMap.keySet()){
+                    if(countMap.get(secondKey) == 2 && key != secondKey){
+                        twoPair = true;
+                    }
+                }
+            }
+            else if (countMap.get(key) == 3) {
+                triple = true;
+            }
+            else if(countMap.get(key) == 4){
+                fourCard = true;
+            }
+        }
+        if(onePair && triple){
+            return "FULLHOUSE";
+        }
+        else if(fourCard){
+            return "FOURCARD";
+        }
+        else if(triple){
+            return "TRIPLE";
+        }
+        else if(twoPair){
+            return "TWOPAIR";
+        }
+        else if(onePair){
+            return "ONEPAIR";
+        }
         return "NOTHING";
     }
 }
