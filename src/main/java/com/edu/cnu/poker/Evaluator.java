@@ -12,7 +12,6 @@ public class Evaluator {
     public String evaluate(List<Card> cardList) {
         Map<Suit, Integer> suitRelatedMap = new HashMap<Suit, Integer>();
         Map<Integer, Integer> rankRelatedMap = new HashMap<Integer, Integer>();
-
         boolean onePair = false;
         boolean twoPair = false;
         boolean triple = false;
@@ -28,6 +27,42 @@ public class Evaluator {
             }
         }
 
+        //NoFair
+        for (Suit key : suitRelatedMap.keySet()) {
+            for (Integer key2 : rankRelatedMap.keySet()) {
+                if ((rankRelatedMap.get(key) == 2 && rankRelatedMap.get(key2) == 1) || (rankRelatedMap.get(key) == 3 && rankRelatedMap.get(key2) == 1) || (rankRelatedMap.get(key) == 4 && rankRelatedMap.get(key2) == 1)) {
+                    return "NOPAIR";
+                }
+            }
+        }
+
+        for (Integer key : rankRelatedMap.keySet()) {
+
+            if (rankRelatedMap.get(key) == 2) {
+                onePair = true;
+                for (Integer secondKey : rankRelatedMap.keySet()) {
+                    if (rankRelatedMap.get(secondKey) == 2 && key != secondKey) {
+                        twoPair = true;
+                    }
+                }
+            } else if (rankRelatedMap.get(key) == 3) {
+                triple = true;
+            } else if (rankRelatedMap.get(key) == 4) {
+                fourCard = true;
+            }
+        }
+        if (onePair && triple) {
+            return "FULLHOUSE";
+        } else if (fourCard) {
+            return "FOURCARD";
+        } else if (triple) {
+            return "TRIPLE";
+        } else if (twoPair) {
+            return "TWOPAIR";
+        } else if (onePair) {
+            return "ONEPAIR";
+        }
+
 
         if (isStraight(cardList, rankRelatedMap) && isFlush(cardList, suitRelatedMap)) {
             return "STRAIGHT FLUSH";
@@ -40,50 +75,7 @@ public class Evaluator {
         } else if (isRoyal(cardList, rankRelatedMap)) {
             return "ROYAL";
         }
-
-        //NoFair
-        for(Suit key : suitRelatedMap.keySet()){
-            for (Integer key2 : rankRelatedMap.keySet()){
-                if((rankRelatedMap.get(key) == 2 && rankRelatedMap.get(key2) == 1) || (rankRelatedMap.get(key) == 3 && rankRelatedMap.get(key2) == 1) || (rankRelatedMap.get(key) == 4 && rankRelatedMap.get(key2) == 1)){
-                    return "NOPAIR";
-                }
-            }
-        }
-
-        for (Integer key : rankRelatedMap.keySet()) {
-
-            if(rankRelatedMap.get(key) == 2){
-                onePair = true;
-                for(Integer secondKey : rankRelatedMap.keySet()){
-                    if(rankRelatedMap.get(secondKey) == 2 && key != secondKey){
-                        twoPair = true;
-                    }
-                }
-            }
-            else if (rankRelatedMap.get(key) == 3) {
-                triple = true;
-            }
-            else if(rankRelatedMap.get(key) == 4){
-                fourCard = true;
-            }
-        }
-        if(onePair && triple){
-            return "FULLHOUSE";
-        }
-        else if(fourCard){
-            return "FOURCARD";
-        }
-        else if(triple){
-            return "TRIPLE";
-        }
-        else if(twoPair){
-            return "TWOPAIR";
-        }
-        else if(onePair){
-            return "ONEPAIR";
-        }
         return "NOTHING";
-
     }
 
     private boolean isRoyal(List<Card> cardList, Map<Integer, Integer> rankRelatedMap) {
@@ -110,35 +102,37 @@ public class Evaluator {
         quickSort(straight, straight.length); // 오름차순으로 카드 정렬
 
         if (straight[0] < 10) { //10보다 크면 스트레이트가 날수가 없다. 마지막 스트레이트는 9 10 11 12 13 이기 때문
-            for (int pointer = 0; pointer < straight.length - 1; pointer++) {
-                if (straight[pointer] - straight[pointer + 1] == -1) {   //여기서 첫번째 연속적인 숫자가 걸렷다.
-                    count = 0;
-                    for (int secondPointer = pointer + 1; secondPointer < straight.length; secondPointer++) {
-                        //첫번째 연속적인 숫자와, 그 다음 숫자들도 연속적임
-                        if (1 == straight[secondPointer] - straight[(secondPointer - 1)]) {
-                            count++; //변수 count를 증가시킨다.
-                            if (count == 4) {
-                                //count 3이 되면, 첫번쨰 연속적인 숫자가 잇고, 그 후에 연속적인 숫자가 3번이 나오게 되니까 스트레이트임
-                                straightMap.put(straight[pointer], count);
+                for (int pointer = 0; pointer < straight.length - 1; pointer++) {
+                    if (straight[pointer] - straight[pointer + 1] == -1) {   //여기서 첫번째 연속적인 숫자가 걸렷다.
+                        count = 0;
+                        for (int secondPointer = pointer + 1; secondPointer < straight.length; secondPointer++) {
+                            //첫번째 연속적인 숫자와, 그 다음 숫자들도 연속적임
+                            if (1 == straight[secondPointer] - straight[(secondPointer - 1)]) {
+                                count++; //변수 count를 증가시킨다.
+
+                                if (count == 4) {
+                                    //count 3이 되면, 첫번쨰 연속적인 숫자가 잇고, 그 후에 연속적인 숫자가 3번이 나오게 되니까 스트레이트임
+                                    straightMap.put(straight[pointer], count);
+
+                                }
+                            } else {
+                                count = 0;
                             }
-                        } else {
-                            count = 0;
                         }
+                    } else {
+                        straightMap.put(0, 0);
                     }
-                } else {
-                    straightMap.put(0, 0);
                 }
             }
-        }
 
-        for (Integer integer : straightMap.keySet()) {
-            if (straightMap.get(integer) == 4) {
-                //숫자중에 value가 4인것이 있으면 STRAIGHT
-                return true;
+            for (Integer integer : straightMap.keySet()) {
+                if (straightMap.get(integer) == 4) {
+                    //숫자중에 value가 4인것이 있으면 STRAIGHT
+                    return true;
+                }
             }
+            return false;
         }
-        return false;
-    }
 
     private boolean isFlush(List<Card> cardList, Map<Suit, Integer> tempMap) {
         for (Card card : cardList) {
@@ -159,7 +153,6 @@ public class Evaluator {
         }
         return false;
     }
-
 
     public void quickSort(int numbers[], int array_size) {
         q_sort(numbers, 0, array_size - 1);
