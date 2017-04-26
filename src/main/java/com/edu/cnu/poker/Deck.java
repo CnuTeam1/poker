@@ -32,6 +32,7 @@ public class Deck {
             }
         }
         Collections.shuffle(cardList);
+        System.out.println(cardList);
     }
 
     public int getTotalCard() {
@@ -44,4 +45,6 @@ public class Deck {
         }
         return cardList.remove(0);
     }
+
+
 }
